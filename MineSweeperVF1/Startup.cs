@@ -62,6 +62,8 @@ namespace MineSweeperVF1
             }
 
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             //app.UseCors();
@@ -72,6 +74,7 @@ namespace MineSweeperVF1
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

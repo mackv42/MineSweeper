@@ -54,6 +54,14 @@ function ClickCell(x) {
         "/MineSweeper/Click",
         { board: data, x: parseInt(coordinates[1], 10), y:parseInt(coordinates[0], 10) },
         function (d) {
+            if (d === true) {
+                //win
+            }
+
+            if (d === false) {
+                //lose
+            }
+
             clear("board");
             data = d;
             createBoardDOM(d);
@@ -92,7 +100,12 @@ function createButton(row, column, data, click){
 	return btn;
 }
 
-createBoardDOM(board);
+//createBoardDOM(board);
 
 //creates a 10X10 board with 15 bombs
+//window.onload = newGame(10, 10, 15);
 newGame(10, 10, 15);
+console.log("hello");
+document.addEventListener('DOMContentLoaded', function () {
+    newGame(10, 10, 15);
+});
