@@ -48,7 +48,7 @@ namespace MineSweeperVF1.Controllers
                     if (x.Hidden) hidden++;
                 }
             }
-            if(flagged >= numBombs && hidden == numBombs) { return true; }
+            if(flagged == numBombs && hidden == numBombs) { return true; }
 
             return false;
         }
@@ -156,10 +156,13 @@ namespace MineSweeperVF1.Controllers
         [HttpPost]
         public IEnumerable<IEnumerable<Cell>> Click(List<List<Cell>> board, int x, int y)
         {
-
+            if (Finished(board))
+            {
+                return new List<List<Cell>>();
+            }
             if (board[y][x].isBomb)
             {
-                return board;
+                return null;
             }
             board = Unhide(board, new Point(y, x));
             return board;

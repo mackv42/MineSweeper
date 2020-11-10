@@ -1,3 +1,4 @@
+
 var data;
 
 function createBoardDOM( data ){
@@ -39,7 +40,6 @@ function newGame(width, height, bombs){
             clear('board');
             data = JSON.parse(this.responseText);
             createBoardDOM(JSON.parse(this.responseText));
-
         }
     }
     xhttp.open("GET", "/MineSweeper/GenerateBoard?width="+width+"&height="+height+"&numBombs="+bombs, true)
@@ -54,12 +54,13 @@ function ClickCell(x) {
         "/MineSweeper/Click",
         { board: data, x: parseInt(coordinates[1], 10), y:parseInt(coordinates[0], 10) },
         function (d) {
-            if (d === true) {
-                //win
-            }
-
-            if (d === false) {
+            if (d === undefined) {
                 //lose
+                console.log("You Lose");
+            }
+            if (d.length == 0) {
+                //win
+                console.log("You Win!");
             }
 
             clear("board");
@@ -85,7 +86,7 @@ function createButton(row, column, data, click){
     let btn = document.createElement("BUTTON");
 
     if (data.hidden) {
-        btn.innerHTML = "?";
+        btn.innerHTML = "<br/>";
     } else if (data.isBomb) {
         btn.innerHTML = "?";
     } else {
