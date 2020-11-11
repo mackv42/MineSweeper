@@ -1,9 +1,11 @@
 body{
-
+  
 }
 
 #board{
-	display: table;
+	display: table block;
+    margin: 0 auto;
+    flex: auto;
 }
 
 #board .row{

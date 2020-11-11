@@ -1,5 +1,9 @@
-
+﻿
+//var data;
+var flagCharacter = "🚩";
+var flag = false;
 var data;
+document.addEventListener("keyup", function (e) { if (e.key == "f") { flag = flag ? false : true; } });
 
 function createBoardDOM( data ){
 	let boardDiv = document.getElementById("board");
@@ -46,10 +50,21 @@ function newGame(width, height, bombs){
     xhttp.send();
 }
 
-function ClickCell(x) {
+function ClickCell(x, e) {
     let coordinates = x.value.split("-");
-    console.log(x.value);
-    console.log(data);
+    if (flag) {
+        if (!data[parseInt(coordinates[0], 10)][parseInt(coordinates[1], 10)].hidden) {
+            data[parseInt(coordinates[0], 10)][parseInt(coordinates[1], 10)].flagged = true;
+            x.innerHTML = flagCharacter;
+            return;
+        }
+    }
+    if (data[parseInt(coordinates[0], 10)][parseInt(coordinates[1], 10)].flagged) {
+        data[parseInt(coordinates[0], 10)][parseInt(coordinates[1], 10)].flagged = false;
+        x.innerHTML = "<br/>";
+        return;
+    }
+
     $.post(
         "/MineSweeper/Click",
         { board: data, x: parseInt(coordinates[1], 10), y:parseInt(coordinates[0], 10) },
@@ -84,19 +99,20 @@ function createCell( row, column, data ){
 
 function createButton(row, column, data, click){
     let btn = document.createElement("BUTTON");
-
-    if (data.hidden) {
+    if (data.flagged) {
+        btn.innerHTML = flagCharacter;
+    }
+    else if (data.hidden) {
         btn.innerHTML = "<br/>";
-    } else if (data.isBomb) {
-        btn.innerHTML = "?";
-    } else {
+    }  else {
         btn.innerHTML = data.value;
     }
 
 	btn.setAttribute("value", row+ "-"+column);
 	//btn.innerHTML = data;
-	
-	btn.addEventListener("click", function(){click( this )})
+
+    btn.addEventListener("click", function () { click(this) })
+    //btn.addEventListener("oncontextmenu", function (e) { e.preventDefault(); console.log("hello"); this.innerHTML = flag; return false;}, false)
 	
 	return btn;
 }
@@ -106,7 +122,7 @@ function createButton(row, column, data, click){
 //creates a 10X10 board with 15 bombs
 //window.onload = newGame(10, 10, 15);
 newGame(10, 10, 15);
-console.log("hello");
+
 document.addEventListener('DOMContentLoaded', function () {
     newGame(10, 10, 15);
 });
