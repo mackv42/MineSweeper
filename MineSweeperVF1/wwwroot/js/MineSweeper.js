@@ -53,7 +53,7 @@ function newGame(width, height, bombs){
 function ClickCell(x, e) {
     let coordinates = x.value.split("-");
     if (flag) {
-        if (!data[parseInt(coordinates[0], 10)][parseInt(coordinates[1], 10)].hidden) {
+        if (data[parseInt(coordinates[0], 10)][parseInt(coordinates[1], 10)].hidden) {
             data[parseInt(coordinates[0], 10)][parseInt(coordinates[1], 10)].flagged = true;
             x.innerHTML = flagCharacter;
             return;

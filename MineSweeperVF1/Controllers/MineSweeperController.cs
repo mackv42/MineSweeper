@@ -70,7 +70,7 @@ namespace MineSweeperVF1.Controllers
             if (CheckBounds(board, y + 1, x - 1)) { if (board[y + 1][x - 1].isBomb) total++; }
             //right
             if (CheckBounds(board, y, x+1)) { if (board[y][x+1].isBomb) total++; }
-            //above
+            //bottom
             if (CheckBounds(board, y+1, x)) { if (board[y+1][x].isBomb) total++; }
 
             return total;
